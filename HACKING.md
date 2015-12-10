@@ -24,9 +24,9 @@
 ## Make Me Company independant
 
 - pass endpoints upon docker container startup
-- configuration:
-  - github organization the users must be part of in order to get in
-  - mesos/marathon cluster endpoint (IP:PORT)
+- runtime configuration:
+  - 1 github organization the users must be part of in order to get in
+  - 1+ mesos/marathon cluster endpoint (IP:PORT:ENV)
 
 ## Names
 
@@ -36,6 +36,17 @@
 ## Models
 
 ```
+User {
+  string username;
+  string firstname;
+  string lastname;
+  string email;
+  string avatar_url;
+  string mobile;
+  bool is_admin;
+  bool enabled;
+}
+
 HealthCheckTemplate {
   string name;            # e.g. "tcp-connect", "smtp", "http", "redis", or ...
   text code;              # ruby code block to execute
@@ -72,6 +83,7 @@ Environment {
   string name;            # such as production, jail1, staging1, staging2, ...
   string display_name;
   Instance[] instances;   # list of service instances currently running
+  Cluster cluster;        # the reource cluster this env is running on
 }
 
 Instance {
@@ -90,5 +102,20 @@ Instance {
 InstanceLocation {
   string hostname;
   int port;
+}
+
+Cluster {
+  string type;          # such as: "marathon"
+  string ip;
+  int port;
+  Environment[] envs;
+}
+
+Configuration {
+  string github_org;
+  string github_client_id;
+  string github_client_secret;
+  string marathon_ip;
+  int marathon_port;
 }
 ```
