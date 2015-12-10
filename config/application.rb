@@ -18,9 +18,22 @@ module Serviced
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
+    # config.i18n.default_locale = :en
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.github_scope = [
+        'repo_deployment',
+        'repo:status',
+        'repo',
+        'read:org',
+        'read:public_key',
+        'user:email'].
+        join(',')
+
+    # FIXME
+    config.github_client_id = ENV['GITHUB_CLIENT_ID']
+    config.github_client_secret = ENV['GITHUB_CLIENT_SECRET']
   end
 end
