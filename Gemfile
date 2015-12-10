@@ -1,5 +1,10 @@
 source 'https://rubygems.org'
 
+gem 'rest_client'
+gem 'json'
+
+# ---------------------------------------------------------------------
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
