@@ -13,10 +13,10 @@ class HomeController < ApplicationController
     client_secret = Rails.application.config.github_client_secret
 
     result = RestClient.post('https://github.com/login/oauth/access_token',
-        {:client_id => client_id,
-         :client_secret => client_secret,
-         :code => session_code,
-         :accept => :json})
+        { :client_id => client_id,
+          :client_secret => client_secret,
+          :code => session_code },
+        :accept => :json)
 
     puts 'headers'
     puts result.headers['Content-Type']
@@ -26,6 +26,6 @@ class HomeController < ApplicationController
     puts "parsed access_token = #{access_token}"
     session[:access_token] = access_token
 
-    redirect '/'
+    redirect_to '/'
   end
 end
