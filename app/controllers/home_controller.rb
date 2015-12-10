@@ -1,10 +1,17 @@
 class HomeController < ApplicationController
   def index
-    scope = Rails.application.config.github_scope
-    client_id = Rails.application.config.github_client_id
+    if !authenticated? then
+      authenticate!
+    else
+      @user = User.find(session[:user_id])
+    end
+    @access_token = session[:access_token]
+  end
 
-    @auth_url = "https://github.com/login/oauth/authorize" +
-                "?scope=#{scope}&client_id=#{client_id}"
+  def logout
+    session[:user_id] = nil
+    session[:access_token] = nil
+    return authenticate!
   end
 
   def github_callback
@@ -12,19 +19,16 @@ class HomeController < ApplicationController
     client_id = Rails.application.config.github_client_id
     client_secret = Rails.application.config.github_client_secret
 
-    result = RestClient.post('https://github.com/login/oauth/access_token',
+    response = JSON.parse(RestClient.post(
+        'https://github.com/login/oauth/access_token',
         { :client_id => client_id,
           :client_secret => client_secret,
           :code => session_code },
-        :accept => :json)
+        :accept => :json))
 
-    puts 'headers'
-    puts result.headers['Content-Type']
-    puts "result: #{result}"
+    session[:access_token] = response['access_token']
 
-    access_token = JSON.parse(result)['access_token']
-    puts "parsed access_token = #{access_token}"
-    session[:access_token] = access_token
+    ensure_user!
 
     redirect_to '/'
   end
