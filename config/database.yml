@@ -17,6 +17,7 @@ development:
   database: serviced_development
   username: root
   password:
+  host: 172.17.0.1
   reconnect: true
 
 # Warning: The database defined as "test" will be erased and
