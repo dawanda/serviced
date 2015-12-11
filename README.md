@@ -5,10 +5,11 @@
 We want a central access point for
 
 * Service Management
-* Service Dependency Management
+* Service Dependency Visualization
 * Service Discovery
 * Service Monitoring
 * Incident Management
+* Feature Views
 
 ### Service Management
 
@@ -17,10 +18,10 @@ with all its meta information and how to handle it.
 
 We can deploy, monitor, and revert your service in the cloud.
 
-### Service Dependency Management
+### Service Dependency Visualization
 
-Most service depend on other services. The more services get deployed, the
-more complex the application stack as a whole becomes.
+Most service depend on other services. The more services get,
+the more complex the application stack as a whole will become.
 
 When declaring a new service all dependencies must be referenced, too.
 
@@ -52,3 +53,10 @@ behind repaired within a per-service customizable time frame.
 
 Automatically pre-fill and issue incident reports with downtime durations,
 affected services and customer facing features.
+
+### Feature Views
+
+Feature Views provide a high level abstract overview of lower level services.
+These Features are used by managers and customer support to know what
+systems are affected in a potential incident to gain more speed
+in communication channels.
