@@ -34,5 +34,6 @@ module Serviced
 
     config.github_client_id = ENV.fetch('GITHUB_CLIENT_ID')
     config.github_client_secret = ENV.fetch('GITHUB_CLIENT_SECRET')
+    config.github_org = ENV.fetch('GITHUB_ORG')
   end
 end

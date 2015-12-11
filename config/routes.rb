@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
   get '/oauth/github/callback' => 'home#github_callback'
   post '/logout' => 'home#logout'
+  get '/github_org_missing' => 'home#github_org_missing'
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.

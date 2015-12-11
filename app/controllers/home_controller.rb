@@ -9,9 +9,12 @@ class HomeController < ApplicationController
   end
 
   def logout
-    session[:user_id] = nil
-    session[:access_token] = nil
-    return authenticate!
+    session.delete(:access_token)
+    session.delete(:user_id)
+  end
+
+  def github_org_missing
+    @github_org = Rails.application.config.github_org
   end
 
   def github_callback
@@ -26,10 +29,22 @@ class HomeController < ApplicationController
           :code => session_code },
         :accept => :json))
 
-    session[:access_token] = response['access_token']
+    github_org_found = false
+    github_org = Rails.application.config.github_org
+    github_orgs = github_orgs!(response['access_token'])
+    github_orgs.each do |org|
+      if org['login'] == github_org
+        github_org_found = true
+      end
+    end
 
-    ensure_user!
-
-    redirect_to '/'
+    if not github_org_found
+      @github_org = github_org
+      redirect_to('/github_org_missing')
+    else
+      session[:access_token] = response['access_token']
+      ensure_user!
+      redirect_to '/'
+    end
   end
 end

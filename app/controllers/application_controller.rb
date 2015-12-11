@@ -13,6 +13,16 @@ class ApplicationController < ActionController::Base
     info
   end
 
+  def github_orgs!(access_token)
+    info = JSON.parse(RestClient.get(
+        'https://api.github.com/user/orgs',
+        {:params => {:access_token => access_token}}))
+
+    logger.debug "github_orgs: #{info}"
+
+    info
+  end
+
   def authenticated?
     client_id = Rails.application.config.github_client_id
     client_secret = Rails.application.config.github_client_secret
