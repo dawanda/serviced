@@ -12,14 +12,14 @@ RUN apt-get update \
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /srv/app
+WORKDIR /srv/app
 
-COPY Gemfile /usr/src/app/
-COPY Gemfile.lock /usr/src/app/
+COPY Gemfile /srv/app/
+COPY Gemfile.lock /srv/app/
 RUN bundle install
 
-COPY . /usr/src/app
+COPY . /srv/app
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
